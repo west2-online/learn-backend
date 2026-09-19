@@ -1,19 +1,21 @@
-# learn-backend 第一轮考核：Java 语言基础与赛事数据处理
+# learn-backend 第一轮：Java 起步任务与赛事数据处理
 
-> 本轮目标不是刷完一套语法课，而是使用 Java 独立完成一个可运行、可测试、可说明设计取舍的命令行项目。固定数据、命令解析、文件读写、异常处理和自动化测试都是本轮必做的一部分；网页采集、详细赛程和性能优化属于完成基础功能后的 Bonus。
+> 先自己把赛事数据抓下来，再做一个查询小工具：输入命令，查出比赛结果。顺便让它遇到输错的命令、找不到的文件时，也能把事情交代清楚。
+
+本轮考察 Java 基础语法、用 HTTP 抓取数据和解析 JSON，以及运用类、集合和文件读写完成小程序的能力。完成情况以代码、测试和 README 为准，**不安排答辩**。
+
+**测试和异常处理从本轮开始就是必做内容。** 每增加一个功能，都想一想：正常输入会得到什么，边界在哪里，失败时程序该怎么办，再用测试验证。能跑通一次只是开始，修改后仍然正确、出错时不悄悄给出错误结果，同样是项目的一部分。
 
 ## 开始前
 
-- 推荐使用 **IntelliJ IDEA** 编写、运行和调试 Java；社区版或 Ultimate 均可，不要求付费版本。
-- 安装仍受支持的 LTS JDK。课程示例优先使用 **Java 21 或 Java 25**；在 README 中写明实际 JDK、构建工具和运行命令。
-- 使用 Maven 或 Gradle 管理依赖和测试；不要手工复制 jar 包到项目目录。
-- 环境安装、Java 入门课程、官方文档和书籍见 [Java 推荐资料](0-推荐资料-java.md)。开始前只需完成“能在 IDEA 中创建项目、运行 `main` 方法、执行一个测试”这三个检查点。
+- 推荐使用 **IntelliJ IDEA**、**JDK 17+**，以及与 JDK 兼容的 Maven 或 Gradle 管理依赖和测试。当前版本与后续 Spring Boot 兼容范围见[第 0 轮](0-开始之前.md#技术版本)。
+- 安装和学习资料见[第 0 轮的 Java 资料](0-开始之前.md#java-第一轮资料)。先完成三个小检查：创建项目、运行 `main` 方法、执行一个测试。
+- 抓取阶段需要联网访问目标站点。如果遇到网络或访问限制，先分清是网络原因、接口变化还是访问限制，再带着现象和已尝试的做法与负责人沟通。
+- 在 README 中记录实际 JDK、构建工具版本和运行命令。
 
 ## AI 学习方式
 
-本轮沿用第二至第六轮的“AI 辅助教学 + 官方文档核验”方式。AI 用于拆分知识、解释错误、设计小练习和评审思路；不能代替你完成考核项目，也不能作为版本或 API 行为的唯一依据。
-
-向 AI 提问时，先提供当前日期、操作系统、JDK 版本、IDEA 版本、构建工具、已掌握内容和当前卡住的现象。涉及 JDK API、依赖、构建配置或命令行行为时，要求它给出适用版本与官方来源，再自行核验。保留真正解决问题的提问、来源和自己的结论；不要提交 AI 直接生成且自己无法解释、修改或调试的代码。
+主要代码先自己实现，再用 AI 解释报错、提示方向或评审思路。提问时提供操作系统、JDK、IDE 和构建工具版本，以及当前代码、预期结果、实际现象和已经尝试过的方法。版本、API 和配置以官方文档或实际运行结果为准。具体原则见[第 0 轮](0-开始之前.md#ai-怎么用)。
 
 - [提示词一：生成第一轮学习路线](prompts/round1/prompt1.md)
 - [提示词二：理解 Java 基础与面向对象](prompts/round1/prompt2.md)
@@ -21,404 +23,196 @@
 - [提示词四：测试、异常与项目结构](prompts/round1/prompt4.md)
 - [提示词五：排查第一轮具体问题](prompts/round1/prompt5.md)
 
-## 知识点
+## 会用到的知识
 
-- JDK、JRE、JVM 的职责；IDEA 项目、源代码、编译产物和运行配置的关系；
-- 变量、基本类型、字符串、表达式、分支、循环、方法、数组与 `List`、`Map`；
-- 类、对象、封装、继承、抽象、多态、接口，以及何时不需要为了“面向对象”额外抽象；
-- 异常的传播、转换和资源关闭；不要吞掉异常或只打印后继续产生错误结果；
-- UTF-8 文本、文件读写、路径和命令行参数；不得依赖开发机绝对路径；
-- `BigDecimal`、`java.time`、集合、排序、正则等常用标准库的适用边界；
-- Maven/Gradle、JUnit、断言、测试数据、Git 提交和 README；
-- 并发、正则和更深入的标准库属于 Bonus，先完成本轮必做功能与测试。
+- 变量、基本类型、字符串、分支、循环、方法和数组；
+- 类、对象、封装，以及接口、继承和多态的基本用途；
+- `List`、`Map`、泛型和排序；
+- 命令行参数、路径、UTF-8 文本和文件读写；
+- 异常处理、异常传播和资源关闭；
+- **计算机网络基础**：URL 的组成、HTTP 请求与响应、请求方法、常用请求头（如 `User-Agent`、`Accept`）、常见状态码（如 200、403、429）、超时与重试；
+- **JSON**：对象、数组、字符串与数值类型、嵌套结构，以及用 Jackson 或 Gson 之类的库把 JSON 解析成对象、把对象写成 JSON；
+- **Java 打包**：`jar` 包与 `MANIFEST.MF`、`Main-Class`、用 Maven 或 Gradle 打成可执行 jar，以及用 `java -jar` 运行；
+- Maven/Gradle、JUnit、断言和 Git 的基本使用。
 
-## 任务
+按项目需要逐步学习。并发、复杂设计模式和性能优化不在本轮范围内。
 
-使用题目提供的 **2026 World Aquatics Diving World Cup Super Final（北京）固定数据包**，实现一个能够查询赛事数据的控制台程序。项目包括基本功能、单元测试和 README 撰写。
+参考资料：
 
-### 提交方式
+- [MDN：HTTP 概述](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Overview)：请求、响应、方法和状态码；
+- [JSON 介绍（中文）](https://www.json.org/json-zh.html)：JSON 的语法和类型；
+- [Jackson 文档](https://github.com/FasterXML/jackson-docs)：常用的 JSON 解析库，也可以选 Gson；
+- [Java HttpClient](https://docs.oracle.com/en/java/javase/17/docs/api/java.net.http/java/net/http/HttpClient.html)：JDK 自带的 HTTP 客户端，使用其他 JDK 时切换到对应版本；
+- [Maven JAR Plugin](https://maven.apache.org/plugins/maven-jar-plugin/)：打包 jar 与配置 `Main-Class`。
 
-学习者须自行创建一个**公开 GitHub 仓库**，将本轮完整项目提交并推送到该仓库。仓库必须包含源码、固定数据、依赖配置、README、自动化测试和 `.gitignore`；不得只提交 jar、截图或运行结果，也不得提交密钥、个人敏感信息、IDE 缓存或编译产物。
+## 项目：DWASearch
 
-### 需求
+给跳水比赛做一个离线查询工具，分两步：**先自己把赛事数据抓下来存成本地 JSON，再写命令行程序查询选手信息和决赛结果，并写入文本文件**。
 
-实现一个命令行程序，不妨称之为**DWASearch**。
-题目固定数据包位于仓库的 [`data/round-1-diving-2026/`](../data/round-1-diving-2026/)：其中 `data.json` 提供选手和比赛结果，`manifest.json` 记录来源、抓取时间、数据版本与 SHA-256。学习者应将该数据包复制到自己的公开项目仓库，并在 README 写明实际目录和所用数据版本。程序在运行和测试时只能读取本地固定数据；不得依赖赛事官网或其他网络服务，也不得修改原始数据文件。数据格式和维护者更新方式见 [数据包说明](../data/round-1-diving-2026/README.md)。
+数据不由题目提供。抓取本身就是任务的一部分，也是练习 HTTP 和 JSON 的目的：直接拿到现成的数据文件，这两块就练不到了。
 
-### 1. 基本功能
+### 1. 自己抓取赛事数据
 
-假设有一个软件可以输出 2026 World Aquatics Diving World Cup Super Final（北京）的选手信息和比赛结果。
-输入指令和输出文件以命令行参数传入。例如我们在命令行窗口(cmd)中输入：
+目标赛事是 **World Aquatics Diving World Cup 2026 - Super Final（北京）**，需要选手名单和下面八个项目的决赛结果。数据接口、请求方式和保存的 JSON 结构由你自己查证和设计，并在 README 写明来源、抓取时间和结构。
+
+- 参考仓库 [LunaY77/DWASearch](https://github.com/LunaY77/DWASearch)：一份包含抓取与查询流程的实现，可以对照它了解怎么找到数据接口、怎么发请求、怎么把 JSON 解析成对象。可以阅读和借鉴思路。
+- 抓取脚本属于交付物：放在仓库里，能重复运行，失败时说明原因，不要手工复制粘贴数据。
+- 抓取要守规矩：控制请求频率，必要时加请求间隔与重试，不要高频轮询，也不要绕过登录、验证码或访问限制。
+- 抓到的原始结果保存为本地 JSON（如 `data.json`）并一并提交，它就是你的数据快照。程序运行和测试只读本地文件，不访问网络，也不依赖赛事官网当天是否可访问。
+
+程序接收两个命令行参数，分别为指令文件和输出文件：
 
 ```bash
 java -jar DWASearch.jar input.txt output.txt
 ```
 
-#### 1.1 输出所有选手信息
+### 2. 查询选手
 
-当input.txt的内容为
+输入 `players`，输出全部选手的全名、性别和国籍。按国籍升序、姓氏（Last Name）升序排列；排序由你的程序完成，不要依赖抓取结果的原始顺序，并在 README 说明排序规则。
 
-```javascript
-players
-```
-
-则会输出**参与该跳水赛事的所有选手信息**到**output.txt**，输出格式如下：
-
-1. 其中`Full Name`对应选手全名，`Gender`为选手性别, `Country`为国籍。
-2. 换行使用'\n'，编码统一使用UTF-8。
-3. 顺序以国籍为首要关键字升序、选手的名(Last Name)为次要关键字升序排序；若固定数据已按此顺序提供，可直接按数据顺序输出，并在 README 中说明。
-4. 每输出一个选手的相关信息后，以5个“-”单独成行作为分割线，最后一个选手信息输出后仍要输出一行分割线。
-5. 输出的内容中除选手名称和选手国籍可能存在空格，其他信息不得增加多于的空格或者其他符号。
-
-输出格式：
-
-```javascript
-Full Name:string
-Gender:string
-Country:string 
------
-...
------
-Full Name:string
-Gender:string
-Country:string 
------
-```
-
-输出样例：
-
-```javascript
-Full Name:COLE Ellie
-Gender:Female
-Country:Australia
------
-Full Name:KEENEY Maddison
-Gender:Female
-Country:Australia
------
-...
------
-Full Name:VERZYL Sophia
-Gender:Female
-Country:United States of America
------
-```
-
----
-
-#### 1.2 输出决赛每个运动项目结果
-
-当input.txt的内容为
-
-```javascript
-result women 3m springboard
-```
-
-则会输出**女子3m跳板**的决赛结果到**output.txt**，输出格式如下:
-
-1. `Full Name`对应选手姓名。
-2. `Rank`为排名。格式如`'1'`。
-3. `Score`表示决赛中该选手的成绩。格式如`'score1 + score2 + score3 + ··· + score7 = totalPoint'`。
-
-输出格式：
-
-```javascript
-Full Name:string
-Rank:string
-Score:string
------
-...
------
-Full Name:string
-Rank:string
-Score:string
------
-```
-
-输出样例：
-
-```javascript
-Full Name:CHEN Jia
-Rank:1
-Score:73.50 + 74.40 + 76.50 + 72.00 + 78.00 = 374.40
------
-Full Name:CHEN Yiwen
-Rank:2
-Score:69.00 + 72.00 + 76.50 + 79.05 + 76.50 = 373.05
------
-...
------
-Full Name:KOLOI Alysha
-Rank:4
-Score:67.50 + 65.10 + 40.50 + 58.50 + 63.00 = 294.60
------
-```
-
----
-
-#### 1.3 多条命令
-
-对于**input.txt**，可能包含多行命令。程序应按顺序逐行处理，输出结果连续写入输出文件，不在两条命令之间额外插入空行，空行的处理规则必须写入 README，并在整个程序中保持一致。
-
-例如：
-
-```javascript
-players
-result women 3m springboard
-result women 3m springboard
-players
-```
-
-此时的输出文件**output.txt**中的内容为：
-
-```javascript
-Full Name:COLE Ellie
-Gender:Female
-Country:Australia
------
-Full Name:KEENEY Maddison
-Gender:Female
-Country:Australia
------
-...
------
-Full Name:CHEN Jia
-Rank:1
-Score:73.50 + 74.40 + 76.50 + 72.00 + 78.00 = 374.40
------
-Full Name:CHEN Yiwen
-Rank:2
-Score:69.00 + 72.00 + 76.50 + 79.05 + 76.50 = 373.05
------
-...
------
-Full Name:CHEN Jia
-Rank:1
-Score:73.50 + 74.40 + 76.50 + 72.00 + 78.00 = 374.40
------
-Full Name:CHEN Yiwen
-Rank:2
-Score:69.00 + 72.00 + 76.50 + 79.05 + 76.50 = 373.05
------
-...
------
-Full Name:COLE Ellie
-Gender:Female
-Country:Australia
------
-Full Name:KEENEY Maddison
-Gender:Female
-Country:Australia
------
-...
------
-Full Name:VERZYL Sophia
-Gender:Female
-Country:United States of America
------
-```
-
-其中，每个指令的输出紧贴上一个指令的输出，**无需空行**。
-
-**指令区分大小写**，指令中**所有的英文字母都采用小写的形式**。
-
-#### 1.4 处理非法输入
-
-假如输入无法处理的指令，例如：
-
-1. 无法识别的指令，则输出`Error`
-
-2. result后的比赛项目名称应为如下这些名称之一，如果不正确，则输出`N/A`
-
-   ```js
-   women 3m springboard
-   women 10m platform
-   women 3m synchronised
-   women 10m synchronised
-   men 3m springboard
-   men 10m platform
-   men 3m synchronised
-   men 10m synchronised
-   ```
-
-3. `result` 命令只能包含项目名称；在项目名称后添加任何额外字符，均输出`N/A`。
-
-input.txt样例：
-
-```javascript
-player
-Players
-resultwomen 3m springboard
-result women 10m springboard
-result sss
-result detail
-result women 3m springboard details
-result men 10m     synchronised
-players
-```
-
-output.txt输出：
-
-```javascript
-Error
------
-Error
------
-Error
------
-N/A
------
-N/A
------
-N/A
------
-N/A
------
-N/A
------
-Full Name:COLE Ellie
-Gender:Female
-Country:Australia
------
-Full Name:KEENEY Maddison
-Gender:Female
-Country:Australia
------
-...
------
-Full Name:VERZYL Sophia
-Gender:Female
-Country:United States of America
------
-```
-
-### 2. 接口封装
-
-你是否有发现上面的代码会有这样一个问题：代码散落在各个函数中，很难剥离出来作为一个独立的模块运行以满足不同的需求。
-
-这些代码的种类不同，混杂在一起对于后期的维护扩展很不友好，所以它们的组织结构就需要精心的整理和优化。
-
-为了提高代码的可维护性和可扩展性，需要将基本功能独立成一个模块，称之为"Core模块"。这个模块包括两个基本功能：
-
-1. **输出所有选手信息**
-2. **输出每个比赛项目的结果**
-
-这样的设计使得命令行能够共享相同的代码，通过定义清晰的API，实现与其他模块的交流。
-
-API设计应考虑以下几点：
-
-- **清晰的函数命名：** 使函数名称表达其功能，方便其他开发者理解。
-- **参数设计：** 确定需要传递的参数类型和数量，使接口简洁而有用。
-- **错误处理：** 考虑可能的错误情况，设计良好的错误处理机制。
-
-参考代码：
-
-```java
-public class CoreModule {
-    // 输出所有选手信息
-    public void displayAllPlayersInfo() {
-        // 实现代码...
-    }
-
-    // 输出每个比赛项目的结果
-    public void displayResultsForEachEvent() {
-        // 实现代码...
-    }
-    
-    .......
-}
-
-```
-
-这个模块至少可以在几个地方使用：
-
-- 命令行测试程序使用
-- 在单元测试框架下使用
-
-### 3. 单元测试
-
-测试不能只覆盖一条成功命令。至少应覆盖以下类别：
-
-- 查询选手和查询比赛结果；
-- 多行命令与重复命令；
-- 未知命令和未知项目；
-- 空输入、缺失字段或其他边界数据；
-- 排序、分隔线和输出格式；
-- 文件不存在或路径不可写。
-
-不规定测试用例数量，以关键行为和异常路径是否得到证明为准。
-
-> 推荐使用junit实现单元测试
-
-请阅读邹欣老师的博客：[单元测试和回归测试](https://www.cnblogs.com/xinz/archive/2011/11/20/2255830.html)，编写程序的单元测试
-
-### 4. 项目结构
+输出样例（节选）：
 
 ```text
-round-1/
-├─src/ 或所选语言的源码目录
- ├─DWASearch.java		 # 主程序，可以从命令行接收参数；确保文件名一致、区分大小写
- ├─Lib.java			     # 包含其它自定义函数，可以有多个，对名字不做要求
- ├─data 				 # 文件夹，存放程序的数据
-├─tests/                 # 自动化测试
-├─README.md				 # 描述你的项目，包括如何运行、功能简介、作业链接等	
-├─.gitignore
-└─依赖与构建配置文件
+Full Name:COLE Ellie
+Gender:Female
+Country:Australia
+-----
+Full Name:KEENEY Maddison
+Gender:Female
+Country:Australia
+-----
 ```
 
-1. 在src目录下必须有名为`DWASearch.java`文件，且DWASearch.java中包含 `public static void main(String[] args) `方法
-2. 请在本地将 Java 代码打包成 jar，并在 README 中写明打包命令和验证结果；不要将构建产物提交到 Git 仓库。
+### 3. 查询决赛结果
 
-**注意：**
+输入 `result <项目名称>`，按排名升序输出该项目的决赛结果：选手姓名、排名、各跳成绩和总分。各跳成绩按数据中的顺序用 ` + ` 连接，等号后输出总分，成绩与总分统一保留两位小数。分数用 `BigDecimal` 或按字符串处理，不要直接用二进制浮点数做小数运算。
 
-README.md 需要包括一下内容：
+支持以下八个项目，这八个名称是本轮固定的查询关键字，抓取时确认你拿到的是同一批项目：
 
-1. 记录**模块接口的设计与实现过程**。设计包括代码如何组织，比如会有几个类，几个函数，他们之间关系如何，关键函数是否需要画出流程图？说明你的算法的关键（不必列出源代码），以及独到之处。
-2. 计算模块部分**单元测试展示**。
-3. 计算模块部分**异常处理说明**。
+```text
+women 3m springboard
+women 10m platform
+women 3m synchronised
+women 10m synchronised
+men 3m springboard
+men 10m platform
+men 3m synchronised
+men 10m synchronised
+```
 
-### 提示
+例如，`result women 3m springboard` 的输出如下（节选）：
 
-- 先让一条命令端到端运行，再逐步增加数据类型和错误处理；
-- 不要把输出样例直接写死在代码中；
-- 金额或分数需要精确计算时，不要直接依赖二进制浮点数；
-- 测试关注输入和可观察结果，不要把内部实现锁死；
-- 可以使用 AI 辅助查资料和解释错误，但必须能独立说明、修改和调试提交的代码。
+```text
+Full Name:CHEN Jia
+Rank:1
+Score:73.50 + 74.40 + 76.50 + 72.00 + 78.00 = 374.40
+-----
+Full Name:CHEN Yiwen
+Rank:2
+Score:69.00 + 72.00 + 76.50 + 79.05 + 76.50 = 373.05
+-----
+```
 
-## 工程要求
+### 4. 多条命令与输出约定
 
-### 核心逻辑与输入输出分离
+指令文件可以包含多行，也可以重复查询：
 
-命令行入口只负责读取参数、打开文件和调用核心逻辑。命令解析、数据查询、排序和结果格式化应放在可独立测试的模块中。
+```text
+players
+result women 3m springboard
+result women 3m springboard
+```
 
-不要求使用特定的类或接口，但应避免把所有逻辑写在一个函数中。评审者需要能够在不启动完整命令行程序的情况下测试核心逻辑。
+- 逐行按顺序处理，重复命令应再次输出结果；不要把重复命令去掉。
+- 输入输出统一使用 UTF-8，输出换行使用 `\n`。
+- 每条选手、比赛结果或错误信息后，都以 `-----` 单独一行分隔，最后一条也一样；命令之间不额外插入空行。
+- 字段名、冒号和空格按样例输出，不增加首尾空格；样例中的节选不代表只需输出这些记录。
+- 命令区分大小写，按文档中的小写形式匹配；项目名称中的空格不能随意增加。
+- 空行可以选择忽略或作为非法命令处理，在 README 写明并用测试固定该行为；空文件应产生空输出。
 
-### 固定数据与可复现性
+### 5. 输错命令怎么办
 
-- 必做功能只能依赖随题提供的固定数据包；
-- 不得在测试运行时修改原始数据；
-- 路径不得写死为开发者电脑上的绝对路径；
-- 在 Windows、macOS 或 Linux 中至少说明一个已验证的运行环境；
-- 输出统一使用 UTF-8 和 `\n` 换行，评测时按文档约定进行规范化比较。
+无法识别的命令输出 `Error`。能识别为 `result`（后面是空格或行尾），但项目缺失、不在上述列表内，或名称后多了字符时，输出 `N/A`。每条错误后仍输出分隔线，继续处理后续命令。
 
-## 验收标准
+| 输入 | 输出信息（下一行均为 `-----`） |
+| --- | --- |
+| `player`、`Players`、`players extra` | `Error` |
+| `resultwomen 3m springboard` | `Error` |
+| `result`、`result sss` | `N/A` |
+| `result women 10m springboard` | `N/A` |
+| `result women 3m springboard details` | `N/A` |
+| `result men 10m     synchronised` | `N/A` |
 
-- 按 README 可以从零运行程序和测试；
-- `players`、`result <event>`、多命令和非法输入行为符合规则；
-- 相同输入和固定数据产生相同输出；
-- 核心逻辑与文件、终端等外部输入输出解耦；
-- 自动化测试能够在修改代码后重复执行；
-- 未提交编译产物、编辑器缓存、密钥或与项目无关的大文件；
-- 能通过代码和 README 说明数据如何读取、命令如何解析、结果如何生成。
+### 6. 文件或数据出问题怎么办
+
+输错一行命令可以继续处理，但输入文件打不开、赛事数据损坏时，程序已经无法可靠完成查询。至少处理以下情况：
+
+- 命令行参数数量不对：提示正确用法；
+- 输入文件或数据文件不存在、无法读取：说明哪个文件出了问题；
+- 数据 JSON 无法解析或缺少查询所需字段：说明数据问题，不伪造空结果或默认成绩；
+- 输出路径无法写入或写入失败：报告失败，不提示“查询成功”。
+
+这些故障应向标准错误输出给出可理解的提示，并以非零退出码结束；不要把它们混成业务结果里的 `Error` 或 `N/A`。写入中途失败时可能留下部分输出，要明确提示输出可能不完整，本轮不要求实现原子写入。
+
+合理关闭文件等资源，保留有助于定位问题的原因。不要用一个空的 `catch` 把问题藏起来，也不要捕获异常后继续输出看似正常的结果。测试坏数据时创建独立样本，不改动随作业提交的数据快照。
+
+## 测试：别只试“正常情况下”
+
+使用 **JUnit** 编写可重复执行的自动化测试。写一个功能，就为它补上正常、边界和失败情况的检查，不要等全部完成后才补测试。
+
+| 检查对象 | 至少验证什么 |
+| --- | --- |
+| 选手与成绩查询 | 返回的数据、顺序和成绩格式与提交的本地 JSON 快照一致（抽样核对） |
+| 命令处理 | 多行、重复命令、未知命令、缺失或错误项目名称 |
+| 边界与格式 | 空文件、约定的空行行为、大小写、多余空格、分隔线和换行 |
+| 错误后继续 | 一条非法命令后接一条合法命令，两条都按规则输出 |
+| 数据读取 | JSON 损坏、缺少必要字段时明确失败 |
+| 程序入口与文件 | 参数数量错误、文件不存在、输出不可写时有提示，并返回非零退出码 |
+
+测试需要断言预期结果，不能只打印出来靠肉眼判断。不规定数量或覆盖率百分比，但关键行为和失败路径都应有证据。
+
+核心逻辑可以直接传入数据测试，文件行为使用临时文件或目录验证，不依赖自己电脑上的固定路径。另保留一次真实命令行运行检查，确认打包后的程序也能读取输入并生成输出。
+
+遇到 Bug 时，先保留能复现它的输入，修复后把它加入回归测试，确认同类问题不会悄悄回来。可参考：[单元测试和回归测试](https://www.cnblogs.com/xinz/archive/2011/11/20/2255830.html)。
+
+## 代码组织与提交
+
+把抓取和查询分开：抓取脚本负责联网取数并写出本地 JSON，查询程序只读本地文件。命令解析、查询和格式化整理成可以独立调用的方法或类，让测试无需每次启动整个命令行程序；类名和分层方式自行设计。
+
+使用 Maven/Gradle 的常规项目布局，保留含 `main` 方法的 `DWASearch.java` 作为入口。用构建工具把程序打成**可执行 jar**，在 README 写明打包命令、`Main-Class` 的配置方式和运行命令；jar 等构建产物不提交到仓库。
+
+第一轮 Java 作业提交到 [west2-online-reserve/collection-java](https://github.com/west2-online-reserve/collection-java) 的 [`work2/`](https://github.com/west2-online-reserve/collection-java/tree/main/work2) 目录，具体方式按该仓库说明和当届通知执行。个人目录包含源码、抓取脚本、抓取得到的本地 JSON 数据快照、依赖与构建配置、自动化测试、README 和 `.gitignore`，并且能够独立运行。
+
+README 简要说明：
+
+1. 环境版本，构建、运行和测试命令，以及打成可执行 jar 的方式；
+2. 数据来源、抓取时间、抓取脚本的用法，以及你定义的 JSON 结构；
+3. 已完成功能、空行处理规则和已知限制；
+4. 抓取、数据读取、命令处理、结果输出分别由哪些脚本、方法或类负责；
+5. 测试覆盖哪些行为、实际执行结果，以及主要故障如何处理。
+
+README 以别人能够运行、检查和继续修改项目为准，不提交设计报告或 PPT。
+
+## 本轮完成检查
+
+**本轮不答辩，以代码、自动化测试和 README 为准。** 提交前检查：
+
+- 在说明的环境中，按 README 能构建、打包、用 `java -jar` 运行程序并执行测试，路径不依赖个人电脑；
+- 数据由自己的抓取脚本得到，脚本可重复运行，仓库中的数据快照写明了来源和抓取时间；
+- 两类查询、多命令和非法输入符合约定，相同输入与提交的数据快照产生相同输出；
+- 测试有明确断言，覆盖正常、边界与失败行为，并已实际执行；
+- 文件和数据故障能被清楚报告，资源得到关闭，没有吞掉异常或伪造成功；
+- 能通过代码和 README 看清抓取、解析和查询过程，没有直接写死样例结果。
+
+遇到问题时，带上当前代码、预期结果、实际错误和尝试过程及时沟通。
 
 ## Bonus
 
-完成全部必做内容后，可以选择以下方向：
+基础功能和测试完成后，可以选一个感兴趣的方向：
 
-- 实现 `result <event> detail`，输出预赛、半决赛和决赛的排名与成绩；
-- 支持混合团体项目 `mixed 3m & 10m team`，并把采集器与查询核心隔离；
-- 支持 CSV、JSON 等多种数据源；
-- 基于实际测量定位一个性能问题，记录输入规模、测量方法和优化前后结果；
-- 提供表格化终端输出或其他展示方式，同时保留规定的文件输出格式。
+- 给抓取脚本加上请求间隔、重试或本地缓存，让它在网络抖动时也能跑完；
+- 增加 CSV 等数据源，保留原有 JSON 查询能力；
+- 提供表格化终端展示，同时保留规定的文件输出；
+- 测量一组更大数据下的运行情况，尝试优化，并用原有测试确认结果没有改变。
 
-在线采集仅用于学习：必须遵守目标站点规则，设置超时和合理请求间隔，不得绕过登录、验证码或访问控制；官网不可访问时，核心查询仍应使用固定数据运行。
+Bonus 不抵消缺失的基础功能、测试或异常处理。先把小工具做踏实，再给它加点花样。

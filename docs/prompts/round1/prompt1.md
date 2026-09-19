@@ -6,7 +6,7 @@
 
 - 当前日期：【YYYY-MM-DD】
 - 操作系统：【填写】
-- JDK 版本：【例如 Java 21 / Java 25】
+- JDK 版本：【当前推荐 JDK 17+，填写实际版本】
 - IDE：【IntelliJ IDEA 版本】
 - 构建工具：【Maven / Gradle】
 - 当前基础：【填写已掌握的内容】

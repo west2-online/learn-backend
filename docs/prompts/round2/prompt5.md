@@ -51,9 +51,8 @@
 
 - 密码；
 - API Key；
-- Token；
-- Cookie 或 Session ID；
-- Authorization Header；
+- 登录凭据；
+- 请求头中的敏感信息；
 - 数据库完整连接串；
 - 私钥；
 - 内网主机名或个人信息。
