@@ -16,7 +16,8 @@
 
 | 阶段 | 学习内容 | 主要交付 | 预期时长 | 是否需要答辩 |
 | --- | --- | --- | --- | --- |
-| [第一轮：语言基础与赛事数据处理](docs/1-基础语法-java.md) | 基础语法、数据结构、异常处理、文件读写、测试、依赖管理、HTTP 与 JSON、打包 jar | 自己抓取赛事数据，并实现查询命令行程序 | 4 周 | × |
+| [(Java) 第一轮：语言基础与赛事数据处理](docs/1-基础语法-java.md) | 基础语法、数据结构、异常处理、文件读写、测试、依赖管理、HTTP 与 JSON、打包 jar | 自己抓取赛事数据，并实现查询命令行程序 | 4 周 | × |
+| [(Go) 第一轮：语言基础与赛事数据处理](docs/1-基础语法-go.md) | 基础语法、数据结构、异常处理、文件读写、依赖管理、HTTP 与 JSON | 语法基础、OSPP 爬虫 | 4 周 | × |
 | [第二轮：数据库、TodoList 与网页登录](docs/2-后端基础.md) | MySQL、TodoList、网页登录与鉴权、Docker、测试与异常处理 | 可通过 Docker 运行、支持网页登录的 TodoList | 6 周 | √ |
 | [第三轮：电商业务与下单闭环](docs/3-交易闭环.md) | 收货地址、类目、商品、SKU、购物车、订单与取消 | 从商品浏览到创建订单的完整功能链路 | 4 周 | √ |
 | [第四轮：完整电商与场景深入](docs/4-工程实践.md) | 六个业务域、支付与履约、自选场景、异步与重试、并发、JUC、压测 | 完整基础商城、一个深入专项及可复现的工程实践记录 | 按项目进度安排 | √ |
@@ -27,7 +28,7 @@
 
 ## 作业提交
 
-第一轮 Java 作业提交到 [west2-online-reserve/collection-java](https://github.com/west2-online-reserve/collection-java) 的 [`work2/`](https://github.com/west2-online-reserve/collection-java/tree/main/work2) 目录，具体方式按该仓库说明和当届通知执行。采用 Go 的同学，第一轮提交入口以考核文档为准。
+第一轮 Java 作业提交到 [west2-online-reserve/collection-java](https://github.com/west2-online-reserve/collection-java) 的 [`work2/`](https://github.com/west2-online-reserve/collection-java/tree/main/work2) 目录，具体方式按该仓库说明和当届通知执行。采用 Go 的同学，提交入口以均以对应考核文档为准。
 
 从第二轮开始，学生须自行创建**独立的个人公开项目仓库**，将仓库链接提交到负责人指定入口。第三、第四轮继续在这个电商仓库中迭代，各轮保留 Git 标签或 Release。后续另做新项目，也自行创建对应的个人仓库，不把项目源码收录到本指南仓库。
 
